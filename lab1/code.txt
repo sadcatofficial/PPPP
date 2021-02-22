@@ -1,0 +1,409 @@
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+using namespace std;
+
+
+int** ManualFill(int** M,int width, int height)
+{
+	for (int i = 0; i < width; i++)
+		for (int j = 0; j < height; j++)
+			cin >> M[i][j];
+
+
+	return(M);
+}
+int** ManualFill(int** M1, int** M2,int width,int height)
+{
+	for (int i = 0; i < width; i++)
+	{
+		for (int j = 0; j < height; j++)
+			M1[i][j] = M2[i][j];
+	}
+	return(M1);
+}
+int** ManualFill(int** M1, int** M2, int width, int height,int Quarter)
+{
+	if (Quarter == 1)
+	{
+		for (int i = 0; i < width; i++)
+		{
+			for (int j = 0; j < height; j++)
+			{
+
+				M1[i][j] = M2[i][j];
+			}
+		}
+	}
+
+	if (Quarter == 2)
+	{
+		for (int i = 0; i < width; i++)
+		{
+			for (int j = 0; j < height; j++)
+			{
+
+				M1[i][j] = M2[i][j + height];
+			}
+		}
+	}
+
+	if (Quarter == 3)
+	{
+		for (int i = 0; i < width; i++)
+		{
+			for (int j = 0; j < height; j++)
+			{
+
+				M1[i][j] = M2[i +height][j];
+			}
+		}
+	}
+
+	if (Quarter == 4)
+	{
+		for (int i = 0; i < width; i++)
+		{
+			for (int j = 0; j < height; j++)
+			{
+
+				M1[i][j] = M2[i + height][j + height];
+			}
+		}
+	}
+
+	return(M1);
+}
+
+int** AutoFill(int** M, int width, int height)
+{
+	for (int i = 0; i < width; i++)
+		for (int j = 0; j < height; j++)
+			M[i][j] = rand() % 10;
+
+	return(M);
+}
+
+int** CreateMatrix(int width, int height)
+{
+	int** M = new int* [width];
+	for (int i = 0; i < width; i++)
+		M[i] = new int[height];
+
+	return(M);
+}
+
+int** CreateNullMatrix(int width, int height)
+{
+
+	int** M = new int* [width];
+	for (int i = 0; i < width; i++)
+	{
+		M[i] = new int[height];
+		for (int j = 0; j < height; j++)
+			M[i][j] = 0;
+	}
+	return(M);
+
+}
+
+void DisplayMatrix(int** Mat,int width,int height)
+{
+
+	for (int i = 0; i < width; i++)
+	{
+		for (int j = 0; j < height; j++)
+			cout << Mat[i][j] << " ";
+		cout << endl;
+	}
+
+}
+
+
+void main()
+{
+	srand(time(NULL));
+	int Width1, Height1, Width2, Height2, InputVariant, Multiplier = 2;
+	system("chcp 1251");
+	cout << "Вас приветствует программа" << endl <<
+		"быстрого перемножения матриц методом Штрассена\n\n";
+	do
+	{
+		cout << "Введите размеры первой матрицы\n";
+		cin >> Width1 >> Height1;
+	} while (Width1 <= 0 || Height1 <= 0);
+	do
+	{
+		cout << "Введите размеры второй матрицы\n";
+		cin >> Width2 >> Height2;
+	} while (Width2 <= 0 || Height2 <= 0);
+	
+	int** M1 = CreateMatrix(Width1, Height1);
+	int** M2 = CreateMatrix(Width2, Height2);
+
+	///////////////////////////////////////////////////////////////////////////////
+	////////////////Выбор способа заполнения и заполнение матриц///////////////////
+	///////////////////////////////////////////////////////////////////////////////
+
+	do
+	{
+		cout << "Выберите способ заполнения матриц\n" <<
+			"1 - Вручную \n 2 - Случайным образом\n";
+		cin >> InputVariant;
+	} while (InputVariant < 1 || InputVariant > 2);
+	switch (InputVariant)
+	{
+	case 1:
+
+		ManualFill(M1, Width1, Height1);
+		ManualFill(M2, Width2, Height2);
+
+		cout << "\nМатрица 1\n\n";
+		DisplayMatrix(M1, Width1, Height1);
+		cout << "\nМатрица 2\n\n";
+		DisplayMatrix(M1, Width2, Height2);
+		break;
+
+	case 2:
+		AutoFill(M1, Width1, Height1);
+		AutoFill(M2, Width2, Height2);
+
+		cout << "\nМатрица 1\n\n";
+		DisplayMatrix(M1, Width1, Height1);
+		cout << "\nМатрица 2\n\n";
+		DisplayMatrix(M1, Width2, Height2);
+		break;
+	}
+
+	///////////////////////////////////////////////////////////////////////////////
+	/////////////////Приведение матриц к требуемому размеру////////////////////////
+	///////////////////////////////////////////////////////////////////////////////
+
+	while (Multiplier < Width1 || Multiplier < Width2 || Multiplier < Height1 || Multiplier < Height2)
+		Multiplier *= 2;
+	int** M3 = CreateNullMatrix(Multiplier, Multiplier);
+	int** M4 = CreateNullMatrix(Multiplier, Multiplier);
+	ManualFill(M3, M1, Width1, Height1);
+	ManualFill(M4, M2, Width1, Height1);
+
+	cout << "Приведенные матрицы\n";
+	cout << "\nМатрица 1\n\n";
+	DisplayMatrix(M3, Multiplier, Multiplier);
+	cout << "\nМатрица 2\n\n";
+	DisplayMatrix(M4, Multiplier, Multiplier);
+
+	///////////////////////////////////////////////////////////////////////////////
+	///////////////Разбиение матриц на подматрицы и их заполнение//////////////////
+	///////////////////////////////////////////////////////////////////////////////
+
+
+	int** SubMatrix1 = CreateMatrix(Multiplier / 2, Multiplier / 2);
+	ManualFill(SubMatrix1, M3, Multiplier / 2, Multiplier / 2, 1);
+
+	int** SubMatrix2 = CreateMatrix(Multiplier / 2, Multiplier / 2);
+	ManualFill(SubMatrix2, M3, Multiplier / 2, Multiplier / 2, 2);
+
+	int** SubMatrix3 = CreateMatrix(Multiplier / 2, Multiplier / 2);
+	ManualFill(SubMatrix3, M3, Multiplier / 2, Multiplier / 2, 3);
+
+	int** SubMatrix4 = CreateMatrix(Multiplier / 2, Multiplier / 2);
+	ManualFill(SubMatrix4, M3, Multiplier / 2, Multiplier / 2, 4);
+
+	int** SubMatrix5 = CreateMatrix(Multiplier / 2, Multiplier / 2);
+	ManualFill(SubMatrix5, M4, Multiplier / 2, Multiplier / 2, 1);
+
+	int** SubMatrix6 = CreateMatrix(Multiplier / 2, Multiplier / 2);
+	ManualFill(SubMatrix6, M4, Multiplier / 2, Multiplier / 2, 2);
+
+	int** SubMatrix7 = CreateMatrix(Multiplier / 2, Multiplier / 2);
+	ManualFill(SubMatrix7, M4, Multiplier / 2, Multiplier / 2, 3);
+
+	int** SubMatrix8 = CreateMatrix(Multiplier / 2, Multiplier / 2);
+	ManualFill(SubMatrix8, M4, Multiplier / 2, Multiplier / 2, 4);
+
+
+
+
+	///////////////////////////////////////////////////////////////////////////////
+	////////////////////////Создание промежуточных матриц//////////////////////////
+	///////////////////////////////////////////////////////////////////////////////
+	int** TempMatrix1 = CreateMatrix(Multiplier/2, Multiplier/2);
+	int** TempMatrix2 = CreateMatrix(Multiplier / 2, Multiplier / 2);
+	int** TempMatrix3 = CreateMatrix(Multiplier / 2, Multiplier / 2);
+	int** TempMatrix4 = CreateMatrix(Multiplier / 2, Multiplier / 2);
+	int** TempMatrix5 = CreateMatrix(Multiplier / 2, Multiplier / 2);
+	int** TempMatrix6 = CreateMatrix(Multiplier / 2, Multiplier / 2);
+	int** TempMatrix7 = CreateMatrix(Multiplier / 2, Multiplier / 2);
+	
+
+	///////////////////////////////////////////////////////////////////////////////
+	////////////////////Вычисление значений промежуточных матриц///////////////////
+	///////////////////////////////////////////////////////////////////////////////
+
+	for (int i = 0; i < Multiplier / 2; i++)
+	{
+		for (int j = 0; j < Multiplier / 2; j++)
+		{
+			TempMatrix1[i][j] = 0;
+			TempMatrix2[i][j] = 0;
+			TempMatrix3[i][j] = 0;
+			TempMatrix4[i][j] = 0;
+			TempMatrix5[i][j] = 0;
+			TempMatrix6[i][j] = 0;
+			TempMatrix7[i][j] = 0;
+			for (int z = 0; z < Multiplier / 2; z++)
+			{
+				TempMatrix1[i][j] += (SubMatrix1[i][z] + SubMatrix4[i][z]) * (SubMatrix5[z][j] + SubMatrix8[z][j]);
+				TempMatrix2[i][j] += (SubMatrix3[i][z] + SubMatrix4[i][z]) * SubMatrix5[z][j];
+				TempMatrix3[i][j] += SubMatrix1[i][z] * (SubMatrix6[z][j] - SubMatrix8[z][j]);
+				TempMatrix4[i][j] += SubMatrix4[i][z] * (SubMatrix7[z][j] - SubMatrix5[z][j]);
+				TempMatrix5[i][j] += (SubMatrix1[i][z] + SubMatrix2[i][z]) * SubMatrix8[z][j];
+				TempMatrix6[i][j] += (SubMatrix3[i][z] - SubMatrix1[i][z]) * (SubMatrix5[z][j] + SubMatrix6[z][j]);
+				TempMatrix7[i][j] += (SubMatrix2[i][z] - SubMatrix4[i][z]) * (SubMatrix7[z][j] + SubMatrix8[z][j]);
+			}
+
+			
+		}
+	}
+
+	///////////////////////////////////////////////////////////////////////////////
+	///////////////////////Создание вспомогательных матриц/////////////////////////
+	///////////////////////////////////////////////////////////////////////////////
+
+
+
+	int** SuppMatrix1 = CreateMatrix(Multiplier / 2, Multiplier / 2);
+	int** SuppMatrix2 = CreateMatrix(Multiplier / 2, Multiplier / 2);
+	int** SuppMatrix3 = CreateMatrix(Multiplier / 2, Multiplier / 2);
+	int** SuppMatrix4 = CreateMatrix(Multiplier / 2, Multiplier / 2);
+
+
+	///////////////////////////////////////////////////////////////////////////////
+	////////////Подсчет значений вспомогательных матриц из промежуточных///////////
+	///////////////////////////////////////////////////////////////////////////////
+
+	for (int i = 0; i < Multiplier / 2; i++)
+	{
+		for (int j = 0; j < Multiplier / 2; j++)
+		{
+			SuppMatrix1[i][j] = TempMatrix1[i][j] + TempMatrix4[i][j] - TempMatrix5[i][j] + TempMatrix7[i][j];
+			SuppMatrix2[i][j] = TempMatrix3[i][j] + TempMatrix5[i][j];
+			SuppMatrix3[i][j] = TempMatrix2[i][j] + TempMatrix4[i][j];
+			SuppMatrix4[i][j] = TempMatrix1[i][j] - TempMatrix2[i][j] + TempMatrix3[i][j] + TempMatrix6[i][j];
+		}
+	}
+
+	///////////////////////////////////////////////////////////////////////////////
+	///////////////////Создание результирующей матрицы/////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////
+	int** Result = CreateMatrix(Multiplier, Multiplier);
+
+	///////////////////////////////////////////////////////////////////////////////
+	///////Занесение информации из вспомогательных матриц в результирующую/////////
+	///////////////////////////////////////////////////////////////////////////////
+
+	for (int i = 0; i < Multiplier / 2; i++)
+	{
+		for (int j = 0; j < Multiplier / 2; j++)
+		{
+			Result[i][j] = SuppMatrix1[i][j];
+			Result[i][j + Multiplier / 2] = SuppMatrix2[i][j];
+			Result[i + Multiplier / 2][j] = SuppMatrix3[i][j];
+			Result[i + Multiplier / 2][j + Multiplier / 2] = SuppMatrix4[i][j];
+		}
+	}
+
+	///////////////////////////////////////////////////////////////////////////////
+	////////////////Выравнивание границ результирующей матрицы/////////////////////
+	///////////////////////////////////////////////////////////////////////////////
+
+	int NullCounter = 0, ShapedWidth = 100, ShapedHeight = 100;
+	for (int i = 0; i < Multiplier; i++)
+	{
+		NullCounter = 0;
+		for (int j = 0; j < Multiplier; j++)
+		{
+			if (Result[i][j] != 0)
+			{
+				NullCounter++;
+				ShapedWidth = 100;
+			}
+		}
+		if (NullCounter == 0 && i < ShapedWidth)
+		{
+			ShapedWidth = i;
+		}
+	}
+	for (int i = 0; i < Multiplier; i++)
+	{
+		NullCounter = 0;
+		for (int j = 0; j < Multiplier; j++)
+		{
+			if (Result[j][i] != 0)
+			{
+				NullCounter++;
+				ShapedHeight = 100;
+			}
+		}
+		if (NullCounter == 0 && i < ShapedHeight)
+		{
+			ShapedHeight = i;
+		}
+	}
+
+
+	int** AlignedResult = CreateMatrix(ShapedWidth, ShapedHeight);
+	ManualFill(AlignedResult, Result,ShapedWidth,ShapedHeight);
+
+
+	///////////////////////////////////////////////////////////////////////////////
+	///////////////////Вывод результирующей матрицы////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////
+
+	cout << "\nРезультирующая матрица\n\n";
+	DisplayMatrix(AlignedResult,ShapedWidth,ShapedHeight);
+	system("pause");
+
+	///////////////////////////////////////////////////////////////////////////////
+	/////////////////////Очистка динамической памяти///////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////
+
+	for (int i = 0; i < Width1; i++)
+		delete[] M1[i];
+	for (int i = 0; i < Width2; i++)
+		delete[] M2[i];
+	for (int i = 0; i < Multiplier; i++)
+	{
+		delete[] M3[i];
+		delete[] M4[i];
+		delete[] Result[i];
+	}
+	for (int i = 0; i < ShapedWidth; i++)
+		delete[] AlignedResult[i];
+	for (int i = 0; i < Multiplier / 2; i++)
+	{
+		delete[] SubMatrix1[i];
+		delete[] SubMatrix2[i];
+		delete[] SubMatrix3[i];
+		delete[] SubMatrix4[i];
+		delete[] SubMatrix5[i];
+		delete[] SubMatrix6[i];
+		delete[] SubMatrix7[i];
+		delete[] SubMatrix8[i];
+
+		delete[] SuppMatrix1[i];
+		delete[] SuppMatrix2[i];
+		delete[] SuppMatrix3[i];
+		delete[] SuppMatrix4[i];
+		delete[] TempMatrix1[i];
+		delete[] TempMatrix2[i];
+		delete[] TempMatrix3[i];
+		delete[] TempMatrix4[i];
+		delete[] TempMatrix5[i];
+		delete[] TempMatrix6[i];
+		delete[] TempMatrix7[i];
+	}
+	delete[] M1, M2, M3, M4, Result, AlignedResult;
+	delete[] SubMatrix1, SubMatrix2, SubMatrix3, SubMatrix4, SubMatrix5, SubMatrix6, SubMatrix7, SubMatrix8, SuppMatrix1, SuppMatrix2, SuppMatrix3, SuppMatrix4;
+	delete[] TempMatrix1, TempMatrix2, TempMatrix3, TempMatrix4, TempMatrix5, TempMatrix6, TempMatrix7;
+}
