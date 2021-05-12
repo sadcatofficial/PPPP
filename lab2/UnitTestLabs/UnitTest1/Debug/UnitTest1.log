@@ -1,0 +1,19 @@
+﻿  UnitTest1.cpp
+C:\Users\8181881\source\repos\UnitTestLabs\UnitTestLabs\Source.cpp(38,25): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+C:\Users\8181881\source\repos\UnitTestLabs\UnitTestLabs\Source.cpp(38,46): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+C:\Users\8181881\source\repos\UnitTestLabs\UnitTestLabs\Source.cpp(73,26): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+C:\Users\8181881\source\repos\UnitTestLabs\UnitTestLabs\Source.cpp(98,26): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+C:\Users\8181881\source\repos\UnitTestLabs\UnitTestLabs\Source.cpp(128,25): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+C:\Users\8181881\source\repos\UnitTestLabs\UnitTestLabs\Source.cpp(151,25): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+C:\Users\8181881\source\repos\UnitTestLabs\UnitTestLabs\Source.cpp(166,25): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+C:\Users\8181881\source\repos\UnitTestLabs\UnitTestLabs\Source.cpp(166,45): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+C:\Users\8181881\source\repos\UnitTestLabs\UnitTestLabs\Source.cpp(181,25): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+C:\Users\8181881\source\repos\UnitTestLabs\UnitTestLabs\Source.cpp(181,45): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+C:\Users\8181881\source\repos\UnitTestLabs\UnitTestLabs\Source.cpp(196,25): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+C:\Users\8181881\source\repos\UnitTestLabs\UnitTestLabs\Source.cpp(196,45): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+C:\Users\8181881\source\repos\UnitTestLabs\UnitTestLabs\Source.cpp(211,25): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+C:\Users\8181881\source\repos\UnitTestLabs\UnitTestLabs\Source.cpp(211,45): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+C:\Users\8181881\source\repos\UnitTestLabs\UnitTestLabs\Source.cpp(226,25): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+C:\Users\8181881\source\repos\UnitTestLabs\UnitTestLabs\Source.cpp(226,45): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+C:\Users\8181881\source\repos\UnitTestLabs\UnitTestLabs\Source.cpp(242): warning C4715: prg: значение возвращается не при всех путях выполнения
+  UnitTest1.vcxproj -> C:\Users\8181881\source\repos\UnitTestLabs\Debug\UnitTest1.dll
